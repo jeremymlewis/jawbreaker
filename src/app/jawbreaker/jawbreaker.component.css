@@ -1,0 +1,13 @@
+h3 {
+  text-align: center;
+  font-size: 1.5em;
+}
+h1 {
+  text-align: center;
+  font-weight: 300;
+}
+#candy {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

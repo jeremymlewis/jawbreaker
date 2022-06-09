@@ -1,7 +1,15 @@
 <div id="jawbreaker" (click)="addClick()">
-  <h1>Click on the Jawbreaker to break to a new layer!</h1>
-  <h3>A new layer unlocks every 10 clicks!</h3>
+
+  <h3 id="newRarityInfo" style="display:none">Now selecting a new Jawbreaker for you:</h3>
+  <h1 id="rarityToggle" style="display:none">{{RARITY_LEVEL}}</h1>
+
+  <h3 id="rarityDeclaration">This is a {{RARITY_LEVEL}} jawbreaker!</h3>
+  <h3 id="prizeDeclaration">Breaking to the center will give you a {{RARITY_LEVEL}} prize!</h3>
+  <h3 id="clicksDeclaration">A new layer unlocks every {{NEEDED_CLICKS}} clicks!</h3>
+
   <img
+  id="candy"
   width="{{imageWidth}}"
   src="{{imageSource}}">
+
 </div>
