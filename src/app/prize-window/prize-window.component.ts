@@ -25,7 +25,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 export class PrizeWindowDialog {
   constructor(
     public dialogRef: MatDialogRef<PrizeWindowDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: {prizeName: string, prizeImage: string}
+    @Inject(MAT_DIALOG_DATA) public data: {prizeName: string, prizeImage: string, extraMessage: string}
   )
   {
     dialogRef.disableClose = true;

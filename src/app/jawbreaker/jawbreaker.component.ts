@@ -13,9 +13,12 @@ import { PrizeWindowDialog } from '../prize-window/prize-window.component';
 export class JawbreakerComponent {
   title = 'breaker';
   clickCount: number = 0;
-  NEEDED_CLICKS: number = 1;
+  NEEDED_CLICKS: number = 5;
   RARITY_LEVEL: string = "COMMON";
   loadingNewJawbreaker: boolean = false;
+  width: number = window.innerWidth;
+  height: number = window.innerHeight;
+  CANDY_SIZE: number = 525;
 
   imageSource: string = "../assets/JawbreakerCOMMON.png";
   imageWidth: number = 525;
@@ -35,60 +38,197 @@ export class JawbreakerComponent {
 
   constructor(public dialog: MatDialog) {}
 
+
+
+  public ngOnInit() {
+    this.clickCount = 0;
+    this.CANDY_SIZE = 525;
+    if ((.6 * this.height) < this.CANDY_SIZE) {
+      this.CANDY_SIZE = Math.floor(this.height * .6)
+    }
+    if (this.width < this.CANDY_SIZE) {
+      this.CANDY_SIZE = Math.floor(this.width * .9)
+    }
+    this.NEEDED_CLICKS = this.getNeededClicks();
+    this.RARITY_LEVEL = this.getRarityRanking();
+    this.imageSource = "../assets/Jawbreaker" + this.RARITY_LEVEL + ".png";
+    this.imageWidth = this.CANDY_SIZE;
+  }
+
+
   async openDialog() {
     let currentPrize = this.getPrize();
+    let prizeMessage = "";
+    let newClickValue = 5;
+    if (currentPrize.name == "Toothpick") {
+      newClickValue = 4;
+      prizeMessage = "Break your next jawbreaker 20% faster!"
+      currentPrize.name += " Power UP!"
+    }
+    if (currentPrize.name == "Sandpaper") {
+      newClickValue = 3;
+      prizeMessage = "Break your next jawbreaker 40% faster!"
+      currentPrize.name += " Power UP!"
+    }
+    if (currentPrize.name == "Hammer") {
+      newClickValue = 2;
+      prizeMessage = "Break your next jawbreaker 60% faster!"
+      currentPrize.name += " Power UP!"
+    }
+    if (currentPrize.name == "Jack Hammer") {
+      newClickValue = 1;
+      prizeMessage = "Break your next jawbreaker 80% faster!"
+      currentPrize.name += " Power UP!"
+    }
+    if (currentPrize.name == "Bomb") {
+      newClickValue = 0;
+      prizeMessage = "Instantly break your next jawbreaker!"
+      currentPrize.name += " Power UP!"
+    }
     const dialogRef = this.dialog.open(PrizeWindowDialog, {data: {
       prizeName: currentPrize.name,
-      prizeImage: currentPrize.image
+      prizeImage: currentPrize.image,
+      extraMessage: prizeMessage
     }});
     await dialogRef.afterClosed().toPromise();
+    return newClickValue;
   }
 
   getPrize() {
+    let randomNumber = Math.random() * 5 | 0;
+    randomNumber = Math.floor(randomNumber);
     if (this.RARITY_LEVEL == "COMMON") {
-      return this.getCommonPrize();
+      return this.getCommonPrize(randomNumber);
     }
     if (this.RARITY_LEVEL == "UNCOMMON") {
-      return this.getUncommonPrize();
+      return this.getUncommonPrize(randomNumber);
     }
     if (this.RARITY_LEVEL == "RARE") {
-      return this.getRarePrize();
+      return this.getRarePrize(randomNumber);
     }
     if (this.RARITY_LEVEL == "ULTRA RARE") {
-      return this.getUltraRarePrize();
+      return this.getUltraRarePrize(randomNumber);
     }
     if (this.RARITY_LEVEL == "SUPER ULTRA RARE") {
-      return this.getSuperUltraRarePrize();
+      return this.getSuperUltraRarePrize(randomNumber);
     }
     return {name: "Developers Sticker", image: "../assets/JawbreakerCOMMON.png"};
   }
 
-  getCommonPrize() {
-    return {name: "Common Prize", image: "../assets/JawbreakerCOMMON.png"};
+  getCommonPrize(id:number) {
+    let imageSrc = "../assets/";
+    let imageName = "Prize";
+    if (id == 0) {
+      imageSrc+= "Common1.png"
+      imageName="Lump of Coal";
+    } else if (id <=1) {
+      imageSrc+= "Common2.png"
+      imageName="Blue Steam";
+    } else if (id <=2) {
+      imageSrc+= "Common3.png"
+      imageName="Toothpick";
+    }else if (id <=3) {
+      imageSrc+= "Common4.png"
+      imageName="Cheese";
+    }else if (id <=4) {
+      imageSrc+= "Common5.png"
+      imageName="Common Sticker";
+    }
+    return {name: imageName, image: imageSrc};
   }
 
-  getUncommonPrize() {
-    return {name: "Uncommon Prize", image: "../assets/JawbreakerCOMMON.png"};
+  getUncommonPrize(id:number) {
+    let imageSrc = "../assets/";
+    let imageName = "Prize";
+
+    if (id == 0) {
+      imageSrc+= "Uncommon1.png"
+      imageName="Shiny Blue Jawbreaker";
+    } else if (id <=1) {
+      imageSrc+= "Uncommon2.png"
+      imageName="Shiny Red Jawbreaker";
+    } else if (id <=2) {
+      imageSrc+= "Uncommon3.png"
+      imageName="Sandpaper";
+    }else if (id <=3) {
+      imageSrc+= "Uncommon4.png"
+      imageName="Book about Jawbreakers";
+    }else if (id <=4) {
+      imageSrc+= "Uncommon5.png"
+      imageName="Uncommon Sticker";
+    }
+    return {name: imageName, image: imageSrc};
   }
 
-  getRarePrize() {
-    return {name: "Rare Prize", image: "../assets/JawbreakerCOMMON.png"};
+  getRarePrize(id:number) {
+    let imageSrc = "../assets/";
+    let imageName = "Prize";
+
+    if (id == 0) {
+      imageSrc+= "Rare1.png"
+      imageName="Shiny Purple Jawbreaker";
+    } else if (id <=1) {
+      imageSrc+= "Rare2.png"
+      imageName="Hammer";
+    } else if (id <=2) {
+      imageSrc+= "Rare3.png"
+      imageName="Orange Sparkles";
+    }else if (id <=3) {
+      imageSrc+= "Rare4.png"
+      imageName="Green Sparkles";
+    }else if (id <=4) {
+      imageSrc+= "Rare5.png"
+      imageName="Rare Sticker";
+    }
+    return {name: imageName, image: imageSrc};
   }
 
-  getUltraRarePrize() {
-    return {name: "Ultra Rare Prize", image: "../assets/JawbreakerCOMMON.png"};
+  getUltraRarePrize(id:number) {
+    let imageSrc = "../assets/";
+    let imageName = "Prize";
+
+    if (id == 0) {
+      imageSrc+= "UltraRare1.png"
+      imageName="Shiny Gold Jawbreaker";
+    } else if (id <=1) {
+      imageSrc+= "UltraRare2.png"
+      imageName="Blue Toy Car";
+    } else if (id <=2) {
+      imageSrc+= "UltraRare3.png"
+      imageName="Yellow Toy Car";
+    }else if (id <=3) {
+      imageSrc+= "UltraRare4.png"
+      imageName="Jack Hammer";
+    }else if (id <=4) {
+      imageSrc+= "UltraRare5.png"
+      imageName="Super Ultra Rare Sticker";
+    }
+    return {name: imageName, image: imageSrc};
   }
 
-  getSuperUltraRarePrize() {
-    return {name: "Ultra Super Rare Prize", image: "../assets/JawbreakerCOMMON.png"};
+  getSuperUltraRarePrize(id:number) {
+    let imageSrc = "../assets/";
+    let imageName = "Prize";
+
+    if (id == 0) {
+      imageSrc+= "SuperUltraRare1.png"
+      imageName="Bomb";
+    } else if (id <=1) {
+      imageSrc+= "SuperUltraRare2.png"
+      imageName="Bag of money";
+    } else if (id <=2) {
+      imageSrc+= "SuperUltraRare3.png"
+      imageName="Blue Sparkles";
+    }else if (id <=3) {
+      imageSrc+= "SuperUltraRare4.png"
+      imageName="Diamond Ring";
+    }else if (id <=4) {
+      imageSrc+= "SuperUltraRare5.png"
+      imageName="Super Ultra Rare Sticker";
+    }
+    return {name: imageName, image: imageSrc};
   }
 
-  public ngOnInit() {
-    this.clickCount = 0;
-    this.NEEDED_CLICKS = this.getNeededClicks();
-    this.RARITY_LEVEL = this.getRarityRanking();
-    this.imageSource = "../assets/Jawbreaker" + this.RARITY_LEVEL + ".png";
-  }
 
 
   public getNextRarity(rarity: string) {
@@ -102,13 +242,13 @@ export class JawbreakerComponent {
 
   public getRarityRanking() {
     let randomNumber = Math.random() * 100 | 0;
-    if (randomNumber < 50) {
+    if (randomNumber < 40) {
       return "COMMON";
-    } else if (randomNumber < 75) {
+    } else if (randomNumber < 70) {
       return "UNCOMMON";
-    }else if (randomNumber < 89) {
+    }else if (randomNumber < 85) {
       return "RARE";
-    }else if (randomNumber < 97) {
+    }else if (randomNumber < 93) {
       return "ULTRA RARE";
     }else {
       return "SUPER ULTRA RARE";
@@ -116,7 +256,7 @@ export class JawbreakerComponent {
   }
 
   public getNeededClicks() {
-    return 1;
+    return 5;
     //TODO check for clicker power ups
   }
 
@@ -154,11 +294,13 @@ export class JawbreakerComponent {
   }
 
   public async finishBreaking() {
-    await this.openDialog();
+    let breakerBonus: number;
+    breakerBonus = await this.openDialog();
+    this.NEEDED_CLICKS = breakerBonus;
     this.newRarityAnimation();
     this.RARITY_LEVEL = this.getRarityRanking();
     this.imageSource = "../assets/Jawbreaker" + this.RARITY_LEVEL + ".png";
-    this.imageWidth = 525;
+    this.imageWidth = this.CANDY_SIZE;
   }
 
   public async newRarityAnimation() {
@@ -195,6 +337,9 @@ export class JawbreakerComponent {
 
   public addClick() {
     if (this.loadingNewJawbreaker) return;
+    if (this.NEEDED_CLICKS == 0) {
+      this.finishBreaking();
+    }
     this.clickCount++;
     if (this.clickCount >= this.NEEDED_CLICKS) {
       //this.imageSource = this.jaw2;
