@@ -1,8 +1,13 @@
-<h1 mat-dialog-title>You found:</h1>
+<h1 mat-dialog-title style="text-align: center;">You found:</h1>
 <div mat-dialog-content>
-  <p>{{data.prizeName}}</p>
-  <img width=20% src="{{data.prizeImage}}">
+  <p style="text-align: center;">{{data.prizeName}}</p>
+  <img
+  width=20%
+  style="display:block; margin-left:auto; margin-right:auto;"
+  src="{{data.prizeImage}}">
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Accept</button>
+  <button mat-button
+  style="display:block; margin-left:auto; margin-right:auto;"
+  (click)="onNoClick()">Accept</button>
 </div>
