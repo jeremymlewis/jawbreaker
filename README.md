@@ -17,3 +17,4 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 By default the dist folder was excluded from git storage in hte default .gitignore file, but was published here to make export to a web server easier to do.
 
 Copyright (c) 2022 Jeremy Lewis.
+All artwork created by Jeremy Lewis.
