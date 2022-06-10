@@ -1,6 +1,6 @@
 # Jawbreaker Game (AmericanJeremy.com)
 
-This project contains code for a web-application game published on jawbreaker.americanjeremy.com. Makes use of Angular CLI version 12.2.5.
+This project contains code for a web-application game published on jawbreaker.AmericanJeremy.com. Makes use of Angular CLI version 12.2.5.
 
 The game is a simple 'clicker' game where a user clicks repeatedly on an image of a jawbreaker in order to break through multiple layers and win a prize for reaching the center of the candy.
 
